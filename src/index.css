@@ -1,0 +1,62 @@
+/* img{
+  width:50% ;
+  border-radius: 20px;
+  border: 3px solid grey;
+ 
+ 
+} */
+
+.teamMembers{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+   padding: 20px;
+  
+}
+
+.ProfileCard{
+  background-color: rgb(200, 245, 245);
+  border: 2px solid rgba(128, 128, 128, 0.527);
+  border-radius: 12px;
+  padding: 16px;
+  width: 300px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.367);
+  text-align: center;
+}
+
+.ProfileCard img{
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+
+}
+
+body{
+  background-color: rgb(115, 195, 197);
+}
+
+h1{
+  text-align: center;
+  font-size: 40px;
+  color: rgb(224, 254, 254);
+}
+
+.ProfileCard:hover{
+  background-color: hsl(180, 41%, 71%);
+  transition: 0.6s ease;
+  cursor: pointer;
+  transform: scale(1.027);
+
+}
+
+h3{
+  font-size: larger;
+  color: rgb(20, 56, 57);
+  
+}
+
+p{
+  color: rgba(13, 53, 53, 0.926);
+}
