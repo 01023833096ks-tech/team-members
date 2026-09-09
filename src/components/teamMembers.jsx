@@ -7,31 +7,31 @@ function TeamMembers(){
     id: 1,
     name: "Sarah Jenkins",
     title: "Product Manager",
-    image: "/member1.jpg"
+    image: "./member1.jpg"
   },
   {
     id: 2,
     name: "David Miller",
     title: "Software Engineer",
-    image: "/member2.jpg"
+    image: "./member2.jpg"
   },
   {
     id: 3,
     name: "Michael Ross",
     title: "Marketing Lead",
-    image: "/member3.jpg"
+    image: "./member3.jpg"
   },
   {
     id: 4,
     name: "James Wilson",
     title: "UX Designer",
-    image: "/member4.jpg"
+    image: "./member4.jpg"
   },
   {
     id: 5,
     name: "Elena Rostova",
     title: "Operations Director",
-    image:"/member5.jpg"
+    image:"./member5.jpg"
   }
 ];
 
