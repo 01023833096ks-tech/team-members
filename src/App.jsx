@@ -1,13 +1,22 @@
+import {BrowserRouter, Routes, Route} from "react-router-dom"
+import Favorites from "./components/favorites"
 
 import TeamMembers from "./components/teamMembers"
+import { TeamProvider } from "./components/contexts/teamMembersContext"
 function App() {
  
 
   return (
-    <div className='main-conatiner'>
-        <h1>Team Members</h1>
-        <TeamMembers></TeamMembers>
-    </div>
+    <TeamProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/"  element={<TeamMembers />} />
+            <Route path="/team-members"  element={<TeamMembers />} />
+            <Route path="/favorites"  element={<Favorites />} />
+          </Routes>
+        </BrowserRouter>
+    
+    </TeamProvider>
   )
 }
 
