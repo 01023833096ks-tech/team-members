@@ -1,91 +1,126 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProfileCard from "./profileCard";
 import { Link } from "react-router-dom";
-import member1 from "/public/member1.jpg"
-import member2 from "/public/member2.jpg"
-import member3 from "/public/member3.jpg"
-import member4 from "/public/member4.jpg"
-import member5 from "/public/member5.jpg"
+import member1 from "/member1.jpg";
+import member2 from "/member2.jpg";
+import member3 from "/member3.jpg";
+import member4 from "/member4.jpg";
+import member5 from "/member5.jpg";
 
-
-function TeamMembers(){
-
-   const teamMembers = [
+export const initialTeamMembers = [
   {
     id: 1,
     name: "Sarah Jenkins",
     title: "Product Manager",
-    image: member1
+    image: member1,
   },
   {
     id: 2,
     name: "David Miller",
     title: "Software Engineer",
-    image: member2
+    image: member2,
   },
   {
     id: 3,
     name: "Michael Ross",
     title: "Marketing Lead",
-    image: member3
+    image: member3,
   },
   {
     id: 4,
     name: "James Wilson",
     title: "UX Designer",
-    image: member4
+    image: member4,
   },
   {
     id: 5,
     name: "Elena Rostova",
     title: "Operations Director",
-    image: member5
-  }
+    image: member5,
+  },
 ];
 
+function TeamMembers() {
+  const [searchQuery, setSearchQuery] = useState("");
 
-const [searchQuery, setSearchQuery] = useState("")
+  const handleSearch = (e) => {
+    e.preventDefault();
 
-const handleSearch = (e) => { 
-  e.preventDefault();
- 
-  setSearchQuery("")
-}
+    setSearchQuery("");
+  };
 
-const filteredMembers = teamMembers.filter((member) => 
-member.name.toLowerCase().includes(searchQuery.toLowerCase()))
-  
+  const [teamMembers, setTeamMembers] = useState(() => {
+    const storedMembers = localStorage.getItem("teamMembers");
 
+    return storedMembers ? JSON.parse(storedMembers) : initialTeamMembers;
+  });
 
-    return(
-      <div>
-        <Link to="/favorites " className="favorites-btn">Favorites</Link>
+  useEffect(() => {
+    localStorage.setItem("teamMembers", JSON.stringify(teamMembers));
+  }, [teamMembers]);
 
-        <h1>Team Members</h1>
-        <form className="searchForm">
-          <input type="text" placeholder="Search for a team member" className="searchInput"
-          value={searchQuery} onChange={(e) =>{setSearchQuery(e.target.value)}}>
-          </input>
+  const filteredMembers = teamMembers.filter((member) =>
+    member.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
 
-          <button type="submit" onClick={handleSearch} className="searchButton">Reset</button>
-        </form>
-
-        <div className ="teamMembers">
-         {filteredMembers.length > 0 ?
-          filteredMembers.map(member => (
-            <ProfileCard
-                key = {member.id}
-                id = {member.id}
-                member = {member}
-              
-             /> 
-        ) )
-          : <h2 className="noMember">No team member found with this name </h2>
-        } 
-        
+  return (
+    <main className="page-shell">
+      <header className="page-header">
+        <div>
+          <p className="eyebrow">People directory</p>
+          <h1>Team members</h1>
+          <p className="page-intro">
+            A clear view of the people behind the work.
+          </p>
         </div>
+        <nav className="page-actions" aria-label="Team member actions">
+          <Link to="/favorites" className="button button-secondary">
+            Favorites
+          </Link>
+          <Link to="/form" className="button button-primary">
+            Add member
+          </Link>
+        </nav>
+      </header>
+
+      <form className="search-form" onSubmit={handleSearch} role="search">
+        <label className="sr-only" htmlFor="member-search">
+          Search team members
+        </label>
+        <input
+          id="member-search"
+          type="search"
+          placeholder="Search by name"
+          className="search-input"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <button type="submit" className="button button-quiet">
+          Clear
+        </button>
+      </form>
+
+      <div className="results-bar">
+        <p>
+          {filteredMembers.length}{" "}
+          {filteredMembers.length === 1 ? "member" : "members"}
+        </p>
       </div>
-    );
+
+      <div className="team-members-grid">
+        {filteredMembers.length > 0 ? (
+          filteredMembers.map((member) => (
+            <ProfileCard key={member.id} member={member} />
+          ))
+        ) : (
+          <div className="empty-state">
+            <h2>No team member found</h2>
+            <p>Try a different name or clear your search.</p>
+          </div>
+        )}
+      </div>
+    </main>
+  );
 }
 
 export default TeamMembers;
