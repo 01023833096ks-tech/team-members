@@ -224,16 +224,13 @@ h1 {
 
 .profile-image-wrap {
   position: relative;
-  aspect-ratio: 4 / 4.5;
-  overflow: hidden;
   background: #e8edef;
 }
 
 .profile-image-wrap img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto;
 }
 
 .profile-card-content {
@@ -252,6 +249,77 @@ h1 {
   margin-bottom: 0;
   color: var(--muted);
   font-size: 0.88rem;
+}
+
+.delete-button {
+  display: inline-block;
+  width: calc(50% - 5px);
+  min-height: 38px;
+  margin-top: 18px;
+  border: 1px solid rgba(185, 65, 50, 0.35);
+  border-radius: 7px;
+  color: var(--accent-dark);
+  background: #fff7f5;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.delete-button:hover {
+  border-color: var(--accent-dark);
+  color: #fff;
+  background: var(--accent-dark);
+  transform: translateY(-1px);
+}
+
+.delete-button:active {
+  transform: translateY(0);
+}
+
+.delete-button:focus-visible {
+  outline: 3px solid rgba(217, 87, 69, 0.24);
+  outline-offset: 2px;
+}
+
+.edit-button {
+  display: inline-block;
+  width: calc(50% - 5px);
+  min-height: 38px;
+  margin-top: 18px;
+  margin-left: 6px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  color: var(--ink);
+  background: var(--surface);
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 700;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.edit-button:hover {
+  border-color: #bbc7ce;
+  color: var(--accent-dark);
+  background: #eef2f3;
+  transform: translateY(-1px);
+}
+
+.edit-button:active {
+  transform: translateY(0);
+}
+
+.edit-button:focus-visible {
+  outline: 3px solid rgba(217, 87, 69, 0.24);
+  outline-offset: 2px;
 }
 
 .heart-btn {

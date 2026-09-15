@@ -1,13 +1,15 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { initialTeamMembers } from "./teamMembers";
 
 function NewMemberForm() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const editingMember = location.state?.member;
   const [form, setForm] = useState({
-    name: "",
-    title: "",
-    image: "",
+    name: editingMember?.name || "",
+    title: editingMember?.title || "",
+    image: editingMember?.image || "",
   });
 
   const [error, setError] = useState({});
@@ -46,22 +48,23 @@ function NewMemberForm() {
 
     if (Object.keys(validateErrors).length > 0) return;
 
-    const newTeamMember = {
-      id: crypto.randomUUID(),
-      name: form.name,
-      title: form.title,
-      image: form.image,
-    };
-
     const storedMembers = localStorage.getItem("teamMembers");
     const currentMembers = storedMembers
       ? JSON.parse(storedMembers)
       : initialTeamMembers;
+    const savedMember = {
+      id: editingMember?.id || crypto.randomUUID(),
+      name: form.name,
+      title: form.title,
+      image: form.image,
+    };
+    const updatedMembers = editingMember
+      ? currentMembers.map((member) =>
+          member.id === editingMember.id ? savedMember : member,
+        )
+      : [...currentMembers, savedMember];
 
-    localStorage.setItem(
-      "teamMembers",
-      JSON.stringify([...currentMembers, newTeamMember]),
-    );
+    localStorage.setItem("teamMembers", JSON.stringify(updatedMembers));
     navigate("/");
   };
 
@@ -72,9 +75,11 @@ function NewMemberForm() {
       </Link>
       <section className="form-panel">
         <p className="eyebrow">Team directory</p>
-        <h1>Add a new member</h1>
+        <h1>{editingMember ? "Edit team member" : "Add a new member"}</h1>
         <p className="page-intro">
-          Add a person to your shared team directory.
+          {editingMember
+            ? "Edit the details of an existing team member."
+            : "Add a person to your shared team directory."}
         </p>
         <form className="member-form" onSubmit={handleSubmit}>
           <label htmlFor="member-name">Name</label>
@@ -111,7 +116,7 @@ function NewMemberForm() {
           />
           {error.image && <p>{error.image}</p>}
           <button className="button button-primary form-submit" type="submit">
-            Add member
+            {editingMember ? "Save changes" : "Add member"}
           </button>
         </form>
       </section>

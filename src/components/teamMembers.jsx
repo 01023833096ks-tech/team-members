@@ -59,6 +59,12 @@ function TeamMembers() {
     localStorage.setItem("teamMembers", JSON.stringify(teamMembers));
   }, [teamMembers]);
 
+  const deleteMember = (memberId) => {
+    setTeamMembers((prevMembers) =>
+      prevMembers.filter((member) => member.id !== memberId),
+    );
+  };
+
   const filteredMembers = teamMembers.filter((member) =>
     member.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
@@ -110,7 +116,11 @@ function TeamMembers() {
       <div className="team-members-grid">
         {filteredMembers.length > 0 ? (
           filteredMembers.map((member) => (
-            <ProfileCard key={member.id} member={member} />
+            <ProfileCard
+              key={member.id}
+              member={member}
+              onDelete={deleteMember}
+            />
           ))
         ) : (
           <div className="empty-state">
