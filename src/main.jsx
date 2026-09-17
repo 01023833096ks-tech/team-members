@@ -8,7 +8,7 @@ import { HashRouter } from "react-router-dom";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <TeamProvider>
-      <HashRouter basename={import.meta.env.BASE_URL}>
+      <HashRouter basename="/team-members">
         <App />
       </HashRouter>
     </TeamProvider>
